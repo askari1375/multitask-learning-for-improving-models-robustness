@@ -1,1 +1,11 @@
 # Multitask Learning for Improving Models Robustness
+
+During my master's project, which was the diagnosis of a type of blood cancer called leukemia, we faced the problem of white blood cell classification. On the available dataset, we trained common neural networks such as CNN and Vision Transformers for this purpose. The model performed very well on the test set, but when we indirectly tasted those models (because we do not access the labels exactly) on an out-of-distribution test set, we discovered that the model's performance had fallen significantly.
+
+We proposed forcing the network to embed the cell morphological data on its produced feature vector to solve this problem. To accomplish this, we add a segmentation head to the previous network, implying that the network should perform classification and segmentation tasks concurrently. The main issue in that situation was that we didn't have a dataset of that size with both class labels and segmentation masks for each image. So we used a dataset 14.5 times smaller than the previous dataset and achieved nearly the same accuracy. The main accomplishment was that we discovered these new models perform significantly better on the out-of-distribution test set.
+
+Because our model predicts a segmentation mask for each input image in addition to the class label, we decided to put it to the test on the cell segmentation problem. The model's goal was to segment the nucleus and cytoplasm in each image of a white blood cell. As a starting point, we used the U-Net architecture. We discovered that in the case of small training sets, U-Net makes decisions based on relative intensity, which causes it to perform very poorly on cell classes that lack the nucleus but have cytoplasm that is very similar in color to the nucleus of other classes. In this case, our model performs much better and does not have the mentioned issue.
+
+As you can see, the preliminary tests of the proposed idea are very promising, and I believe that this idea can be developed and tested using adversarial methods. According to my intuition, this model will perform very well on adversarial attacks because it embeds morphological information in its proposed feature vector.
+
+
